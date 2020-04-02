@@ -1,6 +1,7 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
+
 class Configs(object):
 
     def __init__(self):
@@ -9,6 +10,7 @@ class Configs(object):
         self.n_classes = 91
         self.pre_trained_model_path = "/tmp/distil_detect_model/"
         self.storage_link = ""
+
 
 class LangISO3CodesToCommonName:
 
@@ -43,36 +45,38 @@ class LangISO3CodesToCommonName:
     def get_common_name(self, iso3_code):
         return self.common_name_map[iso3_code]
 
+
 class LangIDToISO3Codes(object):
 
     def __init__(self):
         self.lang_code_map = {
-            "icr_CO": "icr","new_NP": "new","pms_IT": "pms","fi_FI": "fin",
-            "tl_PH": "tgl","tel_IN": "tel","af_ZA": "afr","ru_RU": "rus",
-            "arz_EG": "arz","lt_LT": "lit","sw_KE": "swa","ka_GE": "kat",
-            "ben_BD": "ben","zlm_ID": "msa","es_ES": "spa","bs_BA": "bos",
-            "la_XX": "lat","az_AZ": "aze","ar_XX": "ara","my_MM": "mya",
-            "cy_GB": "cym","vi_VN": "vie","pan_IN": "pan","io_XX": "ido",
-            "br_FR": "bre","ht_HT": "hat","el_GR": "ell","hi_IN": "hin",
-            "kn_IN": "kan","it_IT": "ita","th_TH": "tha","tat_SU": "tat",
-            "bg_BG": "bul","ce_RU": "che","jvn_GF": "jvn","en_UK": "eng",
-            "als_AL": "als","uk_UA": "ukr","da_DK": "dan","ro_RO": "ron",
-            "sk_SK": "slk","guj_IN": "guj","he_IL": "heb","ko_KR": "kor",
-            "hu_HU": "hun","sw_TZ": "swa","nl_NL": "nld","scn_IT": "scn",
-            "alb_AL": "sqi","ur_PK": "urd","ast_PT": "ast","hr_HR": "hrv",
-            "lad_EU": "lad","urd_IN": "urd","ca_ES": "cat","gl_ES": "glg",
-            "mg_MG": "mlg","ind_ID": "ind","jv_ID": "jav","sv_SE": "swe",
-            "oc_FR": "oci","sr_SR": "srp","cs_CZ": "ces","nds_NL": "nds",
-            "eu_ES": "eus","mn_MN": "mon","ba_RU": "bak","bel_BY": "bel",
-            "yo_NG": "yor","ota_XX": "ota","hy_AM": "hyw","is_IS": "isl",
-            "hbo_IL": "hbo","lb_LU": "ltz","acf_DM": "acf","bar_DE": "bar",
-            "azb_IR": "azb","fr_FR": "fra","en_GB": "eng","tr_TR": "tur",
-            "hwc_US": "hwc","ja_JP": "jpn","pl_PL": "pol","et_EE": "est",
-            "pdc_US": "pdc","mk_MK": "mkd","ml_IN": "mal","crh_AF": "crh",
-            "sco_GB": "sco","mr_IN": "mar","sl_SL": "slv"}
+            "icr_CO": "icr", "new_NP": "new", "pms_IT": "pms", "fi_FI": "fin",
+            "tl_PH": "tgl", "tel_IN": "tel", "af_ZA": "afr", "ru_RU": "rus",
+            "arz_EG": "arz", "lt_LT": "lit", "sw_KE": "swa", "ka_GE": "kat",
+            "ben_BD": "ben", "zlm_ID": "msa", "es_ES": "spa", "bs_BA": "bos",
+            "la_XX": "lat", "az_AZ": "aze", "ar_XX": "ara", "my_MM": "mya",
+            "cy_GB": "cym", "vi_VN": "vie", "pan_IN": "pan", "io_XX": "ido",
+            "br_FR": "bre", "ht_HT": "hat", "el_GR": "ell", "hi_IN": "hin",
+            "kn_IN": "kan", "it_IT": "ita", "th_TH": "tha", "tat_SU": "tat",
+            "bg_BG": "bul", "ce_RU": "che", "jvn_GF": "jvn", "en_UK": "eng",
+            "als_AL": "als", "uk_UA": "ukr", "da_DK": "dan", "ro_RO": "ron",
+            "sk_SK": "slk", "guj_IN": "guj", "he_IL": "heb", "ko_KR": "kor",
+            "hu_HU": "hun", "sw_TZ": "swa", "nl_NL": "nld", "scn_IT": "scn",
+            "alb_AL": "sqi", "ur_PK": "urd", "ast_PT": "ast", "hr_HR": "hrv",
+            "lad_EU": "lad", "urd_IN": "urd", "ca_ES": "cat", "gl_ES": "glg",
+            "mg_MG": "mlg", "ind_ID": "ind", "jv_ID": "jav", "sv_SE": "swe",
+            "oc_FR": "oci", "sr_SR": "srp", "cs_CZ": "ces", "nds_NL": "nds",
+            "eu_ES": "eus", "mn_MN": "mon", "ba_RU": "bak", "bel_BY": "bel",
+            "yo_NG": "yor", "ota_XX": "ota", "hy_AM": "hyw", "is_IS": "isl",
+            "hbo_IL": "hbo", "lb_LU": "ltz", "acf_DM": "acf", "bar_DE": "bar",
+            "azb_IR": "azb", "fr_FR": "fra", "en_GB": "eng", "tr_TR": "tur",
+            "hwc_US": "hwc", "ja_JP": "jpn", "pl_PL": "pol", "et_EE": "est",
+            "pdc_US": "pdc", "mk_MK": "mkd", "ml_IN": "mal", "crh_AF": "crh",
+            "sco_GB": "sco", "mr_IN": "mar", "sl_SL": "slv"}
 
     def get_language_iso3code(self, language_id):
         return self.lang_code_map[language_id]
+
 
 class LanguageMap:
 

@@ -7,8 +7,10 @@ import json
 from six.moves import range
 import six
 
+
 def download_model_extract(web_link, model_path):
     pass
+
 
 # moved pad_sequences implementation here to remove keras dependency
 def pad_sequences(sequences, maxlen=None, dtype='int32',

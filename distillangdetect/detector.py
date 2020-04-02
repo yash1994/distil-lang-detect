@@ -13,6 +13,7 @@ from distillangdetect.cleaner import Cleaner
 
 MAX_LEN = 64
 
+
 class Detector:
     def __init__(self, device=None):
 
@@ -35,13 +36,13 @@ class Detector:
         self.language_map = config.LanguageMap()
         self.language_id_to_iso3_codes = config.LangIDToISO3Codes()
         self.language_iso3_codes_to_common_name = config.LangISO3CodesToCommonName()
-        
+
         print("Loading DistilBert model and tokenizer...")
-        
+
         self.model, self.tokenizer = self.load_model_and_tokenizer()
         self.model.to(self.device)
         self.model.eval()
-        
+
         print("Model loading complete.")
 
     def load_model_and_tokenizer(self):
@@ -60,18 +61,18 @@ class Detector:
 
             return model, tokenizer
         except Exception as e:
-            print("Error in loading model and tokenizer: ",str(e))
+            print("Error in loading model and tokenizer: ", str(e))
 
     def model_inference(self, text):
 
-        tokenized_text = self.tokenizer.encode(text,add_special_tokens=True)
-        
+        tokenized_text = self.tokenizer.encode(text, add_special_tokens=True)
+
         tokenized_text = utils.pad_sequences(
-            [tokenized_text], 
-            maxlen=MAX_LEN, 
+            [tokenized_text],
+            maxlen=MAX_LEN,
             dtype="long",
-            value=0, 
-            truncating="post", 
+            value=0,
+            truncating="post",
             padding="post")
 
         attention_masks = [int(token_id > 0) for token_id in tokenized_text[0]]
@@ -93,4 +94,4 @@ class Detector:
         class_id = self.language_map.get_language_identifier(class_idx)
         class_iso3_code = self.language_id_to_iso3_codes.get_language_iso3code(class_id)
         class_common_name = self.language_iso3_codes_to_common_name.get_common_name(class_iso3_code)
-        return class_common_name 
+        return class_common_name
