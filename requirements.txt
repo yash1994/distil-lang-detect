@@ -1,0 +1,5 @@
+six
+numpy
+pytest
+torch>=1.2.0
+transformers>=2.2.2
