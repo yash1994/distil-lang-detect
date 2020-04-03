@@ -1,6 +1,7 @@
 # coding: utf-8
 from __future__ import unicode_literals
 
+import os
 
 class Configs(object):
 
@@ -104,3 +105,43 @@ class LanguageMap:
 
     def get_language_identifier(self, idx):
         return self.language_map[idx]
+
+class ModelDownloadConfig:
+    def __init__(self):
+        
+        self.torch_models_cache_dir = os.path.join(os.environ["HOME"], ".cache/torch")
+        self.distillangdetect_model_parent = os.path.join(self.torch_models_cache_dir, "distillangdetect_models")
+        
+        self.model_files_req = set([
+            "class_map.json",
+            "config.json",
+            "pytorch_model.bin",
+            "special_tokens_map.json",
+            "tokenizer_config.json",
+            "vocab.txt"])
+        
+        self.link_map = {
+            "distillangdetect_91_langs_0.0.1": "https://www.dropbox.com/s/y9ejzqkyuizcpk5/distillangdetect_91_langs_0.0.1.zip?dl=0"
+        }
+    
+    def check_model_presence(self, model_name):
+        return True if model_name in self.link_map else False
+    
+    def get_model_link(self, model_name):
+        return self.link_map[model_name]
+    
+    def get_model_list(self):
+        return self.link_map.keys()
+    
+    def get_model_path(self, model_name):
+        return os.path.join(self.distillangdetect_model_parent, model_name)
+    
+    def get_model_path_and_varify_integrity(self, model_name):
+        model_path = os.path.join(self.distillangdetect_model_parent, model_name)
+        if os.path.exists(model_path):
+            if set([i for i in os.listdir(model_path)]) == self.model_files_req:
+                return True, model_path
+            else:
+                return False, model_path
+        else:
+            return False, model_path    

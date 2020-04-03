@@ -11,11 +11,9 @@ from distillangdetect import utils
 from distillangdetect import config
 from distillangdetect.cleaner import Cleaner
 
-MAX_LEN = 64
-
 
 class Detector:
-    def __init__(self, device=None):
+    def __init__(self, model="distillangdetect_91_langs_0.0.1", device=None):
 
         if not device:
             if torch.cuda.is_available():
@@ -31,8 +29,11 @@ class Detector:
             else:
                 self.device = torch.device('cpu')
 
-        self.configs = config.Configs().__dict__
+        self.max_sequence_length = 64
+
+        self.model_name = model
         self.text_cleaner = Cleaner()
+        self.model_download_config = config.ModelDownloadConfig()
         self.language_map = config.LanguageMap()
         self.language_id_to_iso3_codes = config.LangIDToISO3Codes()
         self.language_iso3_codes_to_common_name = config.LangISO3CodesToCommonName()
@@ -46,22 +47,23 @@ class Detector:
         print("Model loading complete.")
 
     def load_model_and_tokenizer(self):
-        try:
-            if not os.path.exists(self.configs["pre_trained_model_path"]):
-                utils.download_model_extract(
-                    self.configs["storage_link"],
-                    self.configs["pre_trained_model_path"]
+        if self.model_download_config.check_model_presence(self.model_name):
+            integrity, model_path = self.model_download_config.get_model_path_and_varify_integrity(self.model_name)
+            if not integrity:
+                print("Language detection model not present, download it using: {}".format("distillangdetect download -m distillangdetect_91_langs_0.0.1"))
+                return None, None
+            try:
+                model = transformers.DistilBertForSequenceClassification.from_pretrained(
+                    model_path
                 )
-            model = transformers.DistilBertForSequenceClassification.from_pretrained(
-                self.configs["pre_trained_model_path"]
-            )
-            tokenizer = transformers.DistilBertTokenizer.from_pretrained(
-                self.configs["pre_trained_model_path"]
-            )
-
-            return model, tokenizer
-        except Exception as e:
-            print("Error in loading model and tokenizer: ", str(e))
+                tokenizer = transformers.DistilBertTokenizer.from_pretrained(
+                    model_path
+                )
+                return model, tokenizer
+            except Exception as e:
+                print("Error in loading model and tokenizer: ", str(e))
+        else:
+            print("Language detection model specified is not avilable try one from {}".format(list(self.model_download_config.get_model_list())))        
 
     def model_inference(self, text):
 
@@ -69,7 +71,7 @@ class Detector:
 
         tokenized_text = utils.pad_sequences(
             [tokenized_text],
-            maxlen=MAX_LEN,
+            maxlen=self.max_sequence_length,
             dtype="long",
             value=0,
             truncating="post",

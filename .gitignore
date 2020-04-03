@@ -1,3 +1,9 @@
 *.pyc
+*.zip
 .idea/
 .coverage
+distillangdetect.egg-info/
+build/
+dist/
+htmlcov/
+.tox/

@@ -30,4 +30,7 @@ setup(
     packages=find_packages(),
     install_requires=REQUIRES,
     tests_require=['pytest'],
+    entry_points={
+        "console_scripts": ["distillangdetect=distillangdetect.cli:main"],
+    }
 )
