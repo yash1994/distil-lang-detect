@@ -1,4 +1,4 @@
-# Distil-Lang-Detect
+# <img src="https://i.imgur.com/ALMguVt.png" width="64px" height="64px"/> Distil-Lang-Detect
 
 [![Python 3.6](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-360/) [![Build Status](https://travis-ci.org/yash1994/distil-lang-detect.svg?branch=master)](https://travis-ci.org/yash1994/distil-lang-detect)
 
@@ -6,7 +6,7 @@ Distil-lang-detect is text language detection module based on sequence classific
 
 ## Getting Started
 
-Distil-Lang-Detect can be easily fired-up. Just need the following.
+Distil-Lang-Detect can be easily fired-up. Just need to the following.
 
 ### Requirements
 
@@ -18,7 +18,7 @@ Distil-Lang-Detect can be easily fired-up. Just need the following.
 
 ```bash
 git clone https://github.com/yash1994/distil-lang-detect.git
-cd distil-lang-detect
+cd dframcy
 python setup.py install
 ```
 
@@ -31,4 +31,11 @@ det = dct.detect("I love retro computing.")
 print(det)
 ```
 
->English
+>'English'
+
+## Todos
+
+* [ ] Extensive testing.
+* [ ] Output format options.
+* [ ] Batch Processing.
+* [ ] Bechmarking on different datasets.
