@@ -4,4 +4,5 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install .
+  - distillangdetect download -m distillangdetect_91_langs_0.0.1
 script: pytest
