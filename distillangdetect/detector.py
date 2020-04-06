@@ -99,7 +99,6 @@ class Detector:
 
         logits = output[0].detach().cpu().numpy()
         class_idx = np.argmax(logits, axis=1)[0]
-        print(class_idx)
         return class_idx
 
     def detect(self, text):
