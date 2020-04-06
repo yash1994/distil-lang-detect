@@ -36,6 +36,7 @@ print(det)
 ## Todos
 
 * [ ] Extensive testing.
+* [ ] Add training and evaluation scripts.
 * [ ] Output format options.
 * [ ] Batch Processing.
 * [ ] Bechmarking on different datasets.

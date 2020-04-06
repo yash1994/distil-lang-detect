@@ -17,17 +17,17 @@ class Detector:
 
         if not device:
             if torch.cuda.is_available():
-                self.device = torch.device('cuda')
+                self.device = torch.device("cuda")
                 print("There are %d GPUs available." % torch.cuda.device_count())
                 print("GPU will be used: ", torch.cuda.get_device_name(0))
             else:
                 print("No GPU available, using the CPU instead.")
-                self.device = torch.device('cpu')
+                self.device = torch.device("cpu")
         else:
             if device == "cuda" and torch.cuda.is_available():
-                self.device = torch.device('cuda')
+                self.device = torch.device("cuda")
             else:
-                self.device = torch.device('cpu')
+                self.device = torch.device("cpu")
 
         self.max_sequence_length = 64
 
@@ -48,22 +48,33 @@ class Detector:
 
     def load_model_and_tokenizer(self):
         if self.model_download_config.check_model_presence(self.model_name):
-            integrity, model_path = self.model_download_config.get_model_path_and_varify_integrity(self.model_name)
+            (
+                integrity,
+                model_path,
+            ) = self.model_download_config.get_model_path_and_varify_integrity(
+                self.model_name
+            )
             if not integrity:
-                print("Language detection model not present, download it using: {}".format("distillangdetect download -m distillangdetect_91_langs_0.0.1"))
+                print(
+                    "Language detection model not present, download it using: {}".format(
+                        "distillangdetect download -m distillangdetect_91_langs_0.0.1"
+                    )
+                )
                 return None, None
             try:
                 model = transformers.DistilBertForSequenceClassification.from_pretrained(
                     model_path
                 )
-                tokenizer = transformers.DistilBertTokenizer.from_pretrained(
-                    model_path
-                )
+                tokenizer = transformers.DistilBertTokenizer.from_pretrained(model_path)
                 return model, tokenizer
             except Exception as e:
                 print("Error in loading model and tokenizer: ", str(e))
         else:
-            print("Language detection model specified is not avilable try one from {}".format(list(self.model_download_config.get_model_list())))        
+            print(
+                "Language detection model specified is not avilable try one from {}".format(
+                    list(self.model_download_config.get_model_list())
+                )
+            )
 
     def model_inference(self, text):
 
@@ -75,7 +86,8 @@ class Detector:
             dtype="long",
             value=0,
             truncating="post",
-            padding="post")
+            padding="post",
+        )
 
         attention_masks = [int(token_id > 0) for token_id in tokenized_text[0]]
 
@@ -95,5 +107,7 @@ class Detector:
         class_idx = self.model_inference(text)
         class_id = self.language_map.get_language_identifier(class_idx)
         class_iso3_code = self.language_id_to_iso3_codes.get_language_iso3code(class_id)
-        class_common_name = self.language_iso3_codes_to_common_name.get_common_name(class_iso3_code)
+        class_common_name = self.language_iso3_codes_to_common_name.get_common_name(
+            class_iso3_code
+        )
         return class_common_name

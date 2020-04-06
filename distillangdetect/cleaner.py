@@ -6,7 +6,9 @@ import re
 
 class Cleaner:
     def __init__(self):
-        self.email_re_pattern = r"[-_.0-9A-Za-z]{1,64}@[-_0-9A-Za-z]{1,255}[-_.0-9A-Za-z]{1,255}"
+        self.email_re_pattern = (
+            r"[-_.0-9A-Za-z]{1,64}@[-_0-9A-Za-z]{1,255}[-_.0-9A-Za-z]{1,255}"
+        )
         self.url_re_pattern = r"https?://[-_.?&~;+=/#0-9A-Za-z]{1,2076}"
 
         # http://stackoverflow.com/a/13752628/6762004
