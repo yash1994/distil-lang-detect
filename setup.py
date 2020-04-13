@@ -26,11 +26,15 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3.6",
     ],
-    keywords=["langdetect", "language-detection", "huggingface", "transformers", "bert"],
+    keywords=[
+        "langdetect",
+        "language-detection",
+        "huggingface",
+        "transformers",
+        "bert",
+    ],
     packages=find_packages(),
     install_requires=REQUIRES,
-    tests_require=['pytest'],
-    entry_points={
-        "console_scripts": ["distillangdetect=distillangdetect.cli:main"],
-    }
+    tests_require=["pytest"],
+    entry_points={"console_scripts": ["distillangdetect=distillangdetect.cli:main"],},
 )

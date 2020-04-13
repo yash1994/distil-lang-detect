@@ -78,24 +78,22 @@ class Detector:
 
     def model_inference(self, text):
 
-        tokenized_text = self.tokenizer.encode(text, add_special_tokens=True)
-
-        tokenized_text = utils.pad_sequences(
-            [tokenized_text],
-            maxlen=self.max_sequence_length,
-            dtype="long",
-            value=0,
-            truncating="post",
-            padding="post",
+        tokenized_text = self.tokenizer.encode_plus(
+            text=text,
+            add_special_tokens=True,
+            max_length=self.max_sequence_length,
+            pad_to_max_length=True,
+            return_attention_mask=True,
+            return_tensors="pt",
         )
 
-        attention_masks = [int(token_id > 0) for token_id in tokenized_text[0]]
+        input_ids = tokenized_text["input_ids"]
+        attention_mask = tokenized_text["attention_mask"]
 
         with torch.no_grad():
-            input_tensor = torch.tensor(tokenized_text)
-            attention_masks = torch.tensor(attention_masks).unsqueeze(0)
-            input_tensor = input_tensor.to(self.device)
-            output = self.model(input_tensor, attention_mask=attention_masks)
+            input_ids = input_ids.to(self.device)
+            attention_mask = attention_mask.to(self.device)
+            output = self.model(input_ids, attention_mask=attention_mask)
 
         logits = output[0].detach().cpu().numpy()
         class_idx = np.argmax(logits, axis=1)[0]
